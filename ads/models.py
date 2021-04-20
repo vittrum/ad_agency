@@ -1,6 +1,8 @@
 from django.db import models
 
 # Create your models here.
+from django.urls import reverse
+
 from users.models import Client, Employee
 
 
@@ -13,8 +15,12 @@ class Contract(models.Model):
     def __str__(self):
         return f'{self.client.last_name} by {self.employee.last_name}'
 
+    def get_absolute_url(self):
+        return reverse('contract-detail', args=[str(self.id)])
+
     class Meta:
         db_table = 'contracts'
+        ordering = ['client', '-begin_date']
 
 
 class Bill(models.Model):
@@ -28,6 +34,13 @@ class Bill(models.Model):
             return 'Bill paid'
         else:
             return 'Not paid'
+
+    def get_absolute_url(self):
+        return reverse('bill-detail', args=[str(self.id)])
+
+    class Meta:
+        db_table = 'bills'
+        ordering = ['contract', '-print_date']
 
 
 class BaseAd(models.Model):
@@ -46,11 +59,14 @@ class BaseAd(models.Model):
 class OutdoorAd(BaseAd):
     height = models.IntegerField(default=1)
     width = models.IntegerField(default=1)
-    type = models.CharField()
+    type = models.CharField(max_length=100)
     contract = models.ManyToManyField(Contract)
 
     class Meta:
         db_table = 'outdoor_ads'
+
+    def get_absolute_url(self):
+        return reverse('outdoor-detail', args=[str(self.id)])
 
 
 # TODO: add relative name
@@ -62,6 +78,9 @@ class TVAd(BaseAd):
     class Meta:
         db_table = 'tv_ads'
 
+    def get_absolute_url(self):
+        return reverse('tv-detail', args=[str(self.id)])
+
 
 # TODO: add relative name
 class InternetAd(models.Model):
@@ -72,3 +91,6 @@ class InternetAd(models.Model):
 
     class Meta:
         db_table = 'internet_ads'
+
+    def get_absolute_url(self):
+        return reverse('internet-detail', args=[str(self.id)])
