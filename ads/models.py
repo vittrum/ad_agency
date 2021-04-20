@@ -83,7 +83,7 @@ class TVAd(BaseAd):
 
 
 # TODO: add relative name
-class InternetAd(models.Model):
+class InternetAd(BaseAd):
     type = models.CharField(max_length=100, default='context_ad')
     contract = models.ManyToManyField(Contract)
     audience_coeff = models.IntegerField(default=100)

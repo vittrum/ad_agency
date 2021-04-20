@@ -22,7 +22,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', RedirectView.as_view(url='/accounts/', permanent=True)),
+    path('', RedirectView.as_view(url='/users/', permanent=True)),
     path('ads/', include('ads.urls')),
     path('users/', include('users.urls')),
 ]

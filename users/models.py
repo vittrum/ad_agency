@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+from django.urls import reverse
 
 
 class Client(models.Model):
@@ -10,6 +11,9 @@ class Client(models.Model):
 
     def __str__(self):
         return f'{self.name} {self.last_name}'
+
+    def get_absolute_url(self):
+        return reverse('clients', args=[str(self.id)])
 
     class Meta:
         db_table = 'clients'

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 # TODO: add pg connect
 # TODO: add auth
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -71,6 +72,9 @@ TEMPLATES = [
         },
     },
 ]
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'templates'),
+)
 
 WSGI_APPLICATION = 'ad_agency.wsgi.application'
 
